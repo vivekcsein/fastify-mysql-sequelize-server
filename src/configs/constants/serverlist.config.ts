@@ -1,3 +1,5 @@
+import { envConfig } from "./env.config";
+
 export const whitelistedServer = [
   "https://www.google.com",
   "http:localhost:5500",
@@ -7,3 +9,5 @@ export const whitelistedServer = [
 ];
 
 export const blacklistedIPs = [];
+
+export const allowedOrigins = [`http://localhost:${envConfig.SERVER_PORT}`, 'https://yourdomain.com'];

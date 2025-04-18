@@ -30,7 +30,9 @@ export const getSingleUserbyID = async (req: FastifyRequest, reply: FastifyReply
 export const postCreateUser = async (req: FastifyRequest, reply: FastifyReply) => {
     try {
         const { name, email } = req.body as Iuser;
-        const newUser = { id: 0, name: name, email: email };
+        const { password } = req.body as { password: string };
+        const hashedPasswordGenerated = password;
+        const newUser = { id: 0, name: name, email: email, hashedPassword: hashedPasswordGenerated };
         const res = await dbQuery.DB_createUser(newUser);
         reply.send(res);
     } catch (err) {

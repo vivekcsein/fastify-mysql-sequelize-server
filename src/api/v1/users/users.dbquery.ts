@@ -1,16 +1,13 @@
 
-import { ValidationError } from "sequelize";
+import { ValidationError, ValidationErrorItem } from "sequelize";
 import UserModel from "./users.models";
 
 export const DB_getAllUser = async () => {
     try {
-        const UserList = UserModel.findAll({
-            // where: {
-            //     id: 2,
-            // },
-        });
+        const UserList = UserModel.findAll();
+        return UserList;
     } catch (error) {
-
+        return error;
     }
 }
 
@@ -20,13 +17,14 @@ export const DB_getUser = async (id: number) => {
         const user = await UserModel.findByPk(id);
         return user;
     } catch (error) {
-        return { message: 'Failed to retrieve users' }
+        // return { message: 'Failed to retrieve users' } 
+        return error;
     }
 }
 
 export const DB_createUser = async (user: Iuser) => {
     try {
-        const { name, email } = user;
+        const { name, email, hashedPassword } = user;
         if (!name || !email) {
             throw new Error("Name and email are required.");
         }
@@ -34,30 +32,17 @@ export const DB_createUser = async (user: Iuser) => {
         // Check if email already exists before creating a new user
         const existingUser = await UserModel.findOne({ where: { email: user.email } });
         if (existingUser) {
-            return {
-                message: `Email already exists: ${existingUser.dataValues.email}`,
-                userCreated: null
-            }
+            return new ValidationError(`Email already exists: ${existingUser.dataValues.email}`, [])
         };
 
-        const newUser = await UserModel.create({ name, email });
+        const newUser = await UserModel.create({ name, email, hashedPassword });
         return {
             message: `New user is created with id:${newUser.dataValues.id}`,
             userCreated: newUser
         };
     }
     catch (error) {
-        // console.error("Error creating user:", error);
-        if (error instanceof ValidationError) {
-            if (error.errors.map((e) => e.message == "invalidEmailCategory")) {
-                return {
-                    message: "Pls provide validated emails",
-                    userCreated: null
-                }
-            }
-            return { message: "Validation Error", errors: error.errors.map((e) => e.message) };
-        }
-        return { message: "Failed to create a new user" };
+        return error;
     }
 }
 
@@ -72,10 +57,7 @@ export const DB_updateUser = async (user: Iuser) => {
         if (email && email.length > 0) {
             const existingUser = await UserModel.findOne({ where: { email: user.email } });
             if (existingUser) {
-                return {
-                    message: `Email already exists: ${existingUser.dataValues.email}`,
-                    userCreated: null
-                }
+                return new ValidationError(`Email already exists: ${existingUser.dataValues.email}`, [])
             };
             updateData.email = email;
         }
@@ -98,15 +80,6 @@ export const DB_updateUser = async (user: Iuser) => {
 
         return { message: "User updated successfully", updatedFields: updateData };
     } catch (error) {
-        if (error instanceof ValidationError) {
-            if (error.errors.map((e) => e.message == "invalidEmailCategory")) {
-                return {
-                    message: "Pls provide validated emails",
-                    userUpdated: null
-                }
-            }
-            return { message: "Validation Error", errors: error.errors.map((e) => e.message) };
-        }
-        return { message: "Failed to update user" };
+        return error;
     }
 };

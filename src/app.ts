@@ -1,4 +1,3 @@
-// import cors from "cors";
 import { envConfig } from "./configs/constants/env.config";
 
 // Import the framework and instantiate it
@@ -6,13 +5,16 @@ import Fastify from "fastify";
 import fastifyPlugin from "fastify-plugin";
 
 //Import all typescript instances
-import type { FastifyInstance } from "fastify";
+import type { FastifyInstance, FastifyRequest } from "fastify";
 
 //Import all the plugins for fastify
 import dbPlugin from "./configs/db/db.plugin";
+import corsPlugin from "./configs/middlewares/cors.plugin"
+import errorMiddlewarePlugin from "./configs/middlewares/errors.plugin";
 
 //Import all the Routes files
 import userRoutes from "./api/v1/users/users.routes";
+
 
 //Initialize Fastify app
 const app: FastifyInstance = Fastify({
@@ -31,7 +33,9 @@ if (!envConfig.API_PATH) {
 }
 
 //register database plugin
+await app.register(corsPlugin);
 app.register(dbPlugin);
+app.register(errorMiddlewarePlugin);
 
 // test database plugin and connecting to mysql database
 app.register(fastifyPlugin((fastify, _opts, done) => {

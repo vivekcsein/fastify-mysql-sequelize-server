@@ -1,12 +1,12 @@
 import { Sequelize } from "sequelize";
-import { envDB } from "../constants/env.config";
+import { envConfig, envMysqlDB } from "../constants/env.config";
 // import type { FastifyInstance } from "fastify";
 
 const sequelize = new Sequelize({
-    database: envDB.DB_NAME,
-    username: envDB.DB_USERNAME,
-    password: "",
-    host: "localhost",
+    database: envMysqlDB.DB_NAME,
+    username: envMysqlDB.DB_USERNAME,
+    password: envMysqlDB.DB_PASSWORD,
+    host: envMysqlDB.DB_HOST,
     dialect: "mysql", // or 'mariadb' if using MariaDB
     pool: {
         max: 5,

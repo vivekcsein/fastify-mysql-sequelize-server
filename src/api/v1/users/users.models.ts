@@ -1,5 +1,5 @@
 // models/User.js
-import { DataTypes, Model, type CreationOptional, type ModelDefined, type Optional } from 'sequelize';
+import { DataTypes, Model, STRING, ValidationError, type CreationOptional, type ModelDefined, type Optional } from 'sequelize';
 import sequelize from '../../../configs/db/db.sequelize'; // Import your Sequelize instance
 import { emailEndsWith } from '../../../configs/constants/local.constants';
 type UserCreationAttributes = Optional<Iuser, 'id'>;
@@ -8,6 +8,8 @@ class User extends Model<Iuser, UserCreationAttributes> {
     declare id: CreationOptional<number>;
     declare name: string;
     declare email: string;
+    declare hashedPassword?: string;
+    declare address?: string;
 }
 
 const UserModel:
@@ -34,14 +36,17 @@ const UserModel:
                     isEmail: true,
                     isEndwith: (value: string) => {
                         if (!emailEndsWith.some((val) => value.endsWith(val))) {
-                            throw new Error("invalidEmailCategory");
+                            throw new ValidationError("Email provided is not trusted platform", []);
                         }
                     },
                 },
             },
-            // address:{
-            //     type:DataTypes.STRING
-            // }
+            hashedPassword: {
+                type: DataTypes.STRING(128)
+            },
+            address: {
+                type: DataTypes.STRING(128),
+            },
         },
     );
 
