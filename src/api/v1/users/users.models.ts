@@ -2,13 +2,14 @@
 import { DataTypes, Model, STRING, ValidationError, type CreationOptional, type ModelDefined, type Optional } from 'sequelize';
 import sequelize from '../../../configs/db/db.sequelize'; // Import your Sequelize instance
 import { emailEndsWith } from '../../../configs/constants/local.constants';
+import type { Iuser } from '../../../types/user';
 type UserCreationAttributes = Optional<Iuser, 'id'>;
 
 class User extends Model<Iuser, UserCreationAttributes> {
     declare id: CreationOptional<number>;
     declare name: string;
     declare email: string;
-    declare hashedPassword?: string;
+    declare password?: string;
     declare address?: string;
 }
 
@@ -41,8 +42,15 @@ const UserModel:
                     },
                 },
             },
-            hashedPassword: {
-                type: DataTypes.STRING(128)
+            password: {
+                type: DataTypes.STRING(128),
+                // validate: {
+                //     validateNormalpassword: (value: string) => {
+                //         if(value.length > 20){
+
+                //         }
+                //     }
+                // }
             },
             address: {
                 type: DataTypes.STRING(128),

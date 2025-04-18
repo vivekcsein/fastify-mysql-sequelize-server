@@ -13,11 +13,11 @@ export const errorMiddleware = (err: Error, req: FastifyRequest, reply: FastifyR
                 message: err.message,
                 ...(err.details && { details: err.details }),
             });
-        console.log("unhandled error:", err);
-        return reply.status(500)
-            .header('Content-Type', 'application/json; charset=utf-8').
-            send({
-                err: "something went wrong, please try again"
-            })
+        // console.log("unhandled error:", err);
+        // return reply.status(500)
+        //     .header('Content-Type', 'application/json; charset=utf-8').
+        //     send({
+        //         err: "something went wrong, please try again"
+        //     })
     }
 }

@@ -1,6 +1,6 @@
-
-import { ValidationError, ValidationErrorItem } from "sequelize";
 import UserModel from "./users.models";
+import type { Iuser } from "../../../types/user";
+import { ValidationError } from "../../../configs/utils/errorhandlers/errors.handler";
 
 export const DB_getAllUser = async () => {
     try {
@@ -24,7 +24,7 @@ export const DB_getUser = async (id: number) => {
 
 export const DB_createUser = async (user: Iuser) => {
     try {
-        const { name, email, hashedPassword } = user;
+        const { name, email, password } = user;
         if (!name || !email) {
             throw new Error("Name and email are required.");
         }
@@ -32,10 +32,10 @@ export const DB_createUser = async (user: Iuser) => {
         // Check if email already exists before creating a new user
         const existingUser = await UserModel.findOne({ where: { email: user.email } });
         if (existingUser) {
-            return new ValidationError(`Email already exists: ${existingUser.dataValues.email}`, [])
+            throw new ValidationError(`Email already exists: ${existingUser.dataValues.email}`)
         };
 
-        const newUser = await UserModel.create({ name, email, hashedPassword });
+        const newUser = await UserModel.create({ name, email, password });
         return {
             message: `New user is created with id:${newUser.dataValues.id}`,
             userCreated: newUser
@@ -57,7 +57,7 @@ export const DB_updateUser = async (user: Iuser) => {
         if (email && email.length > 0) {
             const existingUser = await UserModel.findOne({ where: { email: user.email } });
             if (existingUser) {
-                return new ValidationError(`Email already exists: ${existingUser.dataValues.email}`, [])
+                throw new ValidationError(`Email already exists: ${existingUser.dataValues.email}`)
             };
             updateData.email = email;
         }

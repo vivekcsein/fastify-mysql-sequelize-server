@@ -90,6 +90,12 @@ initialize the node project and create package.json using this command on termin
 
 <p>
 
-    bun add ioredis nodemailer ejs
+    bun add ioredis ejs nodemailer
+
+</p>
+
+<p>
+
+    bun add --dev @types/ejs @types/nodemailer
 
 </p>

@@ -2,10 +2,11 @@ import type { FastifyRequest, FastifyReply, FastifyInstance } from 'fastify';
 // import fastifyMysql from '@fastify/mysql';
 import * as dbQuery from "./users.dbquery"
 import dbPlugin from '../../../configs/db/db.plugin';
+import type { Iuser } from '../../../types/user';
 
 export const getAllUsers = async (req: FastifyRequest, reply: FastifyReply) => {
     try {
-        //database get all users
+        //database get all users*
 
     } catch (err) {
         return reply.code(500).send({ error: err })

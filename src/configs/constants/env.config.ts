@@ -13,27 +13,39 @@ const _envConfig = {
 };
 
 const _envMysqlDB = {
-  //database env configs
-  DB_PORT: parseInt(process.env.SERVER_PORT as string, 10) | (3306 as number),
+  //mysql database env configs
   DB_URL: process.env.DB_URL as string,
   DB_HOST: process.env.DB_HOST as string,
   DB_USERNAME: process.env.DB_USERNAME as string,
   DB_PASSWORD: process.env.DB_PASSWORD as string,
   DB_NAME: process.env.DB_NAME as string,
+  DB_PORT: parseInt(process.env.SERVER_PORT as string, 10) | (3306 as number),
 };
 
+//redis database config
 const _envRedisDB = {
-  DB_PORT: parseInt(process.env.REDIS_SERVER_PORT as string, 10) | (3306 as number),
   DB_URL: process.env.DB_REDIS_URL as string,
   DB_HOST: process.env.DB_REDIS_HOST as string,
   DB_USERNAME: process.env.DB_REDIS_USERNAME as string,
   DB_PASSWORD: process.env.DB_REDIS_PASSWORD as string,
   DB_NAME: process.env.DB_REDIS_NAME as string,
+  DB_PORT: parseInt(process.env.REDIS_SERVER_PORT as string, 10) | (3306 as number),
+}
+
+//mail service configs
+const _envMailService = {
+  SMTP_URL: process.env.SMTP_URL as string,
+  SMTP_HOST: process.env.SMTP_HOST as string,
+  SMTP_SERVICE: process.env.SMTP_SERVICE as string,
+  SMTP_USER: process.env.SMTP_USER as string,
+  SMTP_PASSWORD: process.env.SMTP_PASSWORD as string,
+  SMTP_PORT: parseInt(process.env.SMTP_PORT as string, 10) | (3306 as number),
 }
 
 export const envConfig = Object.freeze(_envConfig);
 export const envMysqlDB = Object.freeze(_envMysqlDB);
 export const envRedisDB = Object.freeze(_envRedisDB);
+export const envMailService = Object.freeze(_envMailService);
 
 
 
