@@ -25,11 +25,7 @@ const _envMysqlDB = {
 //redis database config
 const _envRedisDB = {
   DB_URL: process.env.DB_REDIS_URL as string,
-  DB_HOST: process.env.DB_REDIS_HOST as string,
-  DB_USERNAME: process.env.DB_REDIS_USERNAME as string,
-  DB_PASSWORD: process.env.DB_REDIS_PASSWORD as string,
-  DB_NAME: process.env.DB_REDIS_NAME as string,
-  DB_PORT: parseInt(process.env.REDIS_SERVER_PORT as string, 10) | (3306 as number),
+  DB_TOKEN: process.env.DB_REDIS_TOKEN as string,
 }
 
 //mail service configs
@@ -39,7 +35,7 @@ const _envMailService = {
   SMTP_SERVICE: process.env.SMTP_SERVICE as string,
   SMTP_USER: process.env.SMTP_USER as string,
   SMTP_PASSWORD: process.env.SMTP_PASSWORD as string,
-  SMTP_PORT: parseInt(process.env.SMTP_PORT as string, 10) | (3306 as number),
+  SMTP_PORT: parseInt(process.env.SMTP_PORT as string, 10) | (465 as number),
 }
 
 export const envConfig = Object.freeze(_envConfig);

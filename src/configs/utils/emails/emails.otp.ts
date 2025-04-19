@@ -50,7 +50,6 @@ export const sendEmail = async (params: sendEmail_params) => {
             to,
             subject,
             html
-
         });
         return true;
     } catch (error) {

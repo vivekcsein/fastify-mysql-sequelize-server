@@ -48,6 +48,11 @@ export class RateLimitError extends AppError {
         super(message, 429);
     }
 }
+export class RedisDBError extends AppError {
+    constructor(message = "Error connecting with database") {
+        super(message, 429);
+    }
+}
 
 
 

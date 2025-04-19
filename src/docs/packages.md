@@ -86,11 +86,11 @@ initialize the node project and create package.json using this command on termin
 
 </p>
 
-<p>Install Redis (ioredis package) for otp authentication with nodemailer & ejs for email template </p>
+<p>Install Redis (@upstash/redis package) for otp authentication with nodemailer & ejs for email template </p>
 
 <p>
 
-    bun add ioredis ejs nodemailer
+    bun add ejs nodemailer @upstash/redis
 
 </p>
 

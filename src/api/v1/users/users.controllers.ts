@@ -1,4 +1,4 @@
-import type { FastifyRequest, FastifyReply, FastifyInstance } from 'fastify';
+import type { FastifyRequest, FastifyReply, FastifyInstance, DoneFuncWithErrOrRes } from 'fastify';
 // import fastifyMysql from '@fastify/mysql';
 import * as dbQuery from "./users.dbquery"
 import dbPlugin from '../../../configs/db/db.plugin';
@@ -28,7 +28,7 @@ export const getSingleUserbyID = async (req: FastifyRequest, reply: FastifyReply
     }
 };
 
-export const postCreateUser = async (req: FastifyRequest, reply: FastifyReply) => {
+export const postCreateUser = async (req: FastifyRequest, reply: FastifyReply,) => {
     try {
         const { name, email } = req.body as Iuser;
         const { password } = req.body as { password: string };

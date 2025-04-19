@@ -10,4 +10,4 @@ export const whitelistedServer = [
 
 export const blacklistedIPs = [];
 
-export const allowedOrigins = [`http://localhost:${envConfig.SERVER_PORT}`, 'https://yourdomain.com'];
+export const allowedOrigins = [`http://localhost:${envConfig.SERVER_PORT}`, `http://upstash.io`, 'https://yourdomain.com'];

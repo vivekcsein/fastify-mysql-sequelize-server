@@ -14,7 +14,8 @@ import errorMiddlewarePlugin from "./configs/middlewares/errors.plugin";
 
 //Import all the Routes files
 import userRoutes from "./api/v1/users/users.routes";
-
+import authRoutes from "./api/v1/auth/auth.routes";
+import { redisDB_connect } from "./configs/db/db.redis";
 
 //Initialize Fastify app
 const app: FastifyInstance = Fastify({
@@ -39,6 +40,7 @@ app.register(errorMiddlewarePlugin);
 
 // test database plugin and connecting to mysql database
 app.register(fastifyPlugin((fastify, _opts, done) => {
+    redisDB_connect();
     fastify.ready((err) => {
         if (err) {
             console.error('Error connecting to the databases:', err);
@@ -61,6 +63,15 @@ userRoutes.forEach(route => {
             app.route(route);
             done();
         }, { prefix: `${envConfig.API_PATH}/v1/user` }
+    );
+});
+
+authRoutes.forEach(route => {
+    app.register(
+        (app, _, done) => {
+            app.route(route);
+            done();
+        }, { prefix: `${envConfig.API_PATH}/v1/auth` }
     );
 });
 
